@@ -292,10 +292,18 @@ namespace GoogleVisionBarCodeScanner
                         List<BarcodeResult> resultList = new List<BarcodeResult>();
                         foreach (var barcode in barcodes)
                         {
+                            var barcodeArray = barcode.RawData.ToArray();
+                            for (int i = 0; i < barcodeArray.Length; i++)
+                            {
+                                if (barcodeArray[i] == 0)
+                                {
+                                    barcodeArray[i] = 32;
+                                }
+                            }
                             resultList.Add(new BarcodeResult
                             {
                                 BarcodeType = Methods.ConvertBarcodeResultTypes(barcode.ValueType),
-                                DisplayValue = barcode.DisplayValue
+                                DisplayValue = System.Text.Encoding.Default.GetString(barcodeArray)
                             });
                         }
                         OnDetected?.Invoke(resultList);
