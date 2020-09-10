@@ -69,33 +69,39 @@ namespace GoogleVisionBarCodeScanner
         }
         private void setPreviewOrientation()
         {
-            var connection = previewLayer.Connection;
-            if (connection != null)
+            try
             {
-                var curentDevice = UIDevice.CurrentDevice;
-                var orientation = curentDevice.Orientation;
-                var previewLayerConnection = connection;
-                if (previewLayerConnection.SupportsVideoOrientation)
+                var connection = previewLayer.Connection;
+                if (connection != null)
                 {
-                    switch (orientation)
+                    var curentDevice = UIDevice.CurrentDevice;
+                    var orientation = curentDevice.Orientation;
+                    var previewLayerConnection = connection;
+                    if (previewLayerConnection.SupportsVideoOrientation)
                     {
-                        case UIDeviceOrientation.Portrait:
-                            updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.Portrait);
-                            break;
-                        case UIDeviceOrientation.LandscapeRight:
-                            updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.LandscapeLeft);
-                            break;
-                        case UIDeviceOrientation.LandscapeLeft:
-                            updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.LandscapeRight);
-                            break;
-                        case UIDeviceOrientation.PortraitUpsideDown:
-                            updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.PortraitUpsideDown);
-                            break;
-                        default:
-                            updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.Portrait);
-                            break;
+                        switch (orientation)
+                        {
+                            case UIDeviceOrientation.Portrait:
+                                updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.Portrait);
+                                break;
+                            case UIDeviceOrientation.LandscapeRight:
+                                updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.LandscapeLeft);
+                                break;
+                            case UIDeviceOrientation.LandscapeLeft:
+                                updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.LandscapeRight);
+                                break;
+                            case UIDeviceOrientation.PortraitUpsideDown:
+                                updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.PortraitUpsideDown);
+                                break;
+                            default:
+                                updatePreviewLayer(previewLayerConnection, AVCaptureVideoOrientation.Portrait);
+                                break;
+                        }
                     }
                 }
+            }catch(Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
         void Initialize(bool defaultTorchOn, bool vibrationOnDetected, bool startScanningOnCreate)

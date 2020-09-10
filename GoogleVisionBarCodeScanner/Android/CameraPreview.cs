@@ -128,23 +128,30 @@ namespace GoogleVisionBarCodeScanner
 
         public void SetOrientation()
         {
-
-            Android.Hardware.Camera camera = Methods.GetCamera(_cameraSource);
-            switch (_windowManager.DefaultDisplay.Rotation)
+            try
             {
-                case SurfaceOrientation.Rotation0:
-                    camera?.SetDisplayOrientation(90);
-                    break;
-                case SurfaceOrientation.Rotation90:
-                    camera?.SetDisplayOrientation(0);
-                    break;
-                case SurfaceOrientation.Rotation180:
-                    camera?.SetDisplayOrientation(270);
-                    break;
-                case SurfaceOrientation.Rotation270:
-                    camera?.SetDisplayOrientation(180);
-                    break;
+                Android.Hardware.Camera camera = Methods.GetCamera(_cameraSource);
+                switch (_windowManager.DefaultDisplay.Rotation)
+                {
+                    case SurfaceOrientation.Rotation0:
+                        camera?.SetDisplayOrientation(90);
+                        break;
+                    case SurfaceOrientation.Rotation90:
+                        camera?.SetDisplayOrientation(0);
+                        break;
+                    case SurfaceOrientation.Rotation180:
+                        camera?.SetDisplayOrientation(270);
+                        break;
+                    case SurfaceOrientation.Rotation270:
+                        camera?.SetDisplayOrientation(180);
+                        break;
+                }
             }
+            catch(Exception ex)
+            {
+                Log.Error("BarcodeScanner.Droid", ex.Message);
+            }
+            
         }
 
 
